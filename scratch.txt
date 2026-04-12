@@ -1,0 +1,1 @@
+This tool cannot save binary image data directly from a prompt like this. I need to use the image provided in the message context. I will use the image in the prompt.

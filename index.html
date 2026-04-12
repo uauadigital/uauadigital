@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uauá Digital - O Portal de Notícias</title>
+    <link rel="icon" type="image/png" href="ICON_SITE.png">
+    <link rel="apple-touch-icon" href="ICON_SITE.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=3">
+    <!-- Preload do Logo Principal (4.3MB) para iniciar o download o mais cedo possível -->
+    <link rel="preload" as="image" href="topo_site.png" fetchpriority="high">
+</head>
+<body class="light-theme">
+
+    <!-- Header Principal do Portal -->
+    <header class="portal-header">
+        <!-- Barra de Branding Topo (Linha RGB) -->
+        <div class="branding-bar" id="topBrandingBar"></div>
+
+        <!-- Nova Barra de Utilidades (Pesquisa, Tema, Envio) -->
+        <div class="utility-bar">
+            <div class="container utility-flex">
+                <div class="utility-left">
+                    <button class="radio-btn" id="radioPlayBtn" title="Ouvir Radio CBN">
+                        <i data-lucide="play-circle"></i> <span>Rádio CBN</span>
+                    </button>
+                    <audio id="hlsAudio" style="display:none;"></audio>
+                    <div class="search-box" id="searchBox">
+                        <button id="searchBtnExpand"><i data-lucide="search"></i></button>
+                        <input type="text" placeholder="Buscar..." id="searchInput">
+                    </div>
+                </div>
+                <div class="utility-right">
+                    <button id="themeToggle" class="theme-toggle-utility" aria-label="Alternar Tema">
+                        <i data-lucide="moon"></i>
+                    </button>
+                    <button class="citizen-reporter-btn-primary" id="openReporterModal" aria-label="Envie sua Notícia">
+                        <i data-lucide="megaphone"></i> <span>Envie sua Notícia</span>
+                    </button>
+                </div>
+        </div>
+    </div>
+    <div class="branding-bar" id="midBrandingBar"></div>
+
+        <!-- Ticker de Últimas Notícias (Oculto por Padrão) -->
+        <div class="news-ticker" id="topNewsTicker" style="display: none;">
+            <div class="container ticker-flex">
+                <span class="ticker-badge">URGENTE</span>
+                <div class="ticker-text-wrapper">
+                    <div class="ticker-text">
+                        <span>URGENTE: Acompanhe as principais informações em tempo real na nossa página.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container header-main">
+            <!-- Centro: Logo Monumental Centralizado -->
+            <div class="header-logo-container-centered">
+                <img src="topo_site.png" alt="Uauá Digital Logo" class="header-logo-full" fetchpriority="high" decoding="async">
+            </div>
+        </div>
+    </header>
+        
+    <!-- Navegação de Categorias (Estilo Jornal) -->
+    <nav class="portal-nav">
+            <div class="container">
+                <ul class="nav-links">
+                    <li><a href="#" class="active"><i data-lucide="home"></i> Capa</a></li>
+                    <li><a href="#uaua">Uauá</a></li>
+                    <li><a href="#bahia">Giro pela Bahia</a></li>
+                    <li><a href="#brasil">Brasil</a></li>
+                    <li><a href="#mundo">Mundo</a></li>
+                    <li><a href="#comunidades">Comunidades</a></li>
+                </ul>
+            </div>
+            <!-- Barra de Branding Extra (Linha RGB) - Agora interna ao Menu para ficar fixa junto -->
+            <div class="branding-bar" id="extraBrandingBar"></div>
+        </nav>
+
+    <!-- CONTAINER DA HOME (Listas, Carrosseis) -->
+    <div id="homeView">
+        <!-- Manchetes Principais - Carrossel de Destaques Elegante -->
+        <div class="container main-headlines">
+        <div class="hero-carousel" id="heroCarousel">
+            <div class="carousel-track" id="heroTrack">
+                <!-- Gerado via JavaScript (Ultimas 13 notícias) -->
+            </div>
+            
+            <div class="carousel-controls">
+                <!-- Navegação lateral (botões) -->
+                <div class="carousel-nav">
+                    <button class="carousel-btn prev" id="heroPrev"><i data-lucide="chevron-left"></i></button>
+                    <button class="carousel-btn next" id="heroNext"><i data-lucide="chevron-right"></i></button>
+                </div>
+                <!-- Pontos / Barras de Indicação -->
+                <div class="carousel-indicators" id="heroIndicators"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prateleiras de Notícias por Categoria (Timeline/Feed horizontal) -->
+    <main class="container">
+        
+        <section id="uaua" class="news-shelf">
+            <div class="shelf-header">
+                <h2>Notícias de Uauá</h2>
+                <a href="#" class="view-more">Ver mais +</a>
+            </div>
+            <div class="shelf-controls">
+                <button class="scroll-btn left" data-target="shelf-uaua"><i data-lucide="chevron-left"></i></button>
+                <div class="shelf-track" id="shelf-uaua">
+                    <!-- Gerado via JS -->
+                </div>
+                <button class="scroll-btn right" data-target="shelf-uaua"><i data-lucide="chevron-right"></i></button>
+            </div>
+        </section>
+
+        <section id="bahia" class="news-shelf">
+            <div class="shelf-header hide-border">
+                <h2>Giro pela Bahia</h2>
+                <a href="#" class="view-more">Ver mais +</a>
+            </div>
+            <div class="shelf-controls">
+                <button class="scroll-btn left" data-target="shelf-bahia"><i data-lucide="chevron-left"></i></button>
+                <div class="shelf-track" id="shelf-bahia"></div>
+                <button class="scroll-btn right" data-target="shelf-bahia"><i data-lucide="chevron-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Brasil e Mundo podem dividir um container estilo 2 colunas para variar o layout -->
+        <div class="split-layout">
+            <div class="split-main">
+                <section id="brasil" class="news-list-section">
+                    <div class="shelf-header"><h2>Brasil</h2></div>
+                    <div class="news-list" id="list-brasil">
+                        <!-- Gerado via JS em formato de lista -->
+                    </div>
+                </section>
+                
+                <section id="mundo" class="news-list-section">
+                    <div class="shelf-header"><h2>Mundo</h2></div>
+                    <div class="news-list" id="list-mundo"></div>
+                </section>
+            </div>
+            
+            <aside class="sidebar-engagement">
+                <div class="widget">
+                    <h3 style="display: flex; align-items: center; gap: 8px;"><i data-lucide="flame" style="color:#d93025; width:20px; height:20px;"></i> Em alta</h3>
+                    <ul class="ranking-list" id="rankingList">
+                        <!-- Gerado via JS -->
+                        <div style="padding: 10px; font-size: 13px; color:#666;">Carregando ranking...</div>
+                    </ul>
+                </div>
+                
+                <div class="widget">
+                    <h3>Você Pode Gostar</h3>
+                    <div id="recommendedList">
+                        <!-- Gerado via JS -->
+                        <div style="padding: 10px; font-size: 13px; color:#666;">Carregando sugestões...</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+    </div> <!-- Fim HomeView -->
+
+    <!-- CONTAINER DA NOTÍCIA (Leitor Integrado) -->
+    <main class="container article-view" id="articleView" style="display: none; margin-top: 40px; margin-bottom: 60px;">
+        <div class="split-layout">
+            <article class="split-main article-container-card">
+                <button id="btnBackHome" class="citizen-reporter-btn-secondary back-home-btn">
+                    <i data-lucide="arrow-left"></i> Voltar para Capa
+                </button>
+                <div class="article-category-tag" id="articleTag">Destaques</div>
+                <h1 id="articleTitle" class="article-title">Título da Notícia</h1>
+                
+                <div class="article-meta-area">
+                    <div class="article-meta">
+                        <span><i data-lucide="clock"></i> <span id="articleReadTime">3 min</span> de leitura</span>
+                        <span><i data-lucide="user"></i> Redação Integrada</span>
+                    </div>
+                    <div class="article-share">
+                        <button id="btnShareArticle" class="citizen-reporter-btn-secondary btn-share-compact">
+                            <i data-lucide="share-2"></i> Compartilhar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Imagem Destacada Injetada Dinamicamente -->
+                <div id="articleFeaturedMedia" class="article-featured-media"></div>
+                
+                <!-- O conteúdo gerado na API será injetado aqui -->
+                <div id="articleContent" class="article-body">
+                    Carregando conteúdo...
+                </div>
+            </article>
+            
+            <!-- Reutilizando a Sidebar para manter o engajamento na leitura -->
+            <aside class="sidebar-engagement">
+                <div class="widget">
+                    <h3 style="display: flex; align-items: center; gap: 8px;"><i data-lucide="flame" style="color:var(--primary); width:20px; height:20px;"></i> Em alta</h3>
+                    <ul class="ranking-list" id="articleRankingList">
+                        <!-- Gerado via JS -->
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer Padrão Notícias -->
+    <footer class="portal-footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <div class="footer-logo-container">
+                    <img src="topo_site.png" alt="Uauá Digital Logo" class="footer-logo-full" style="height: 45px; margin-bottom: 15px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));" loading="lazy" decoding="async">
+                </div>
+                <p>O principal veículo de comunicação e jornalismo digital da cidade de Uauá e de toda a nossa região. Atualizamos 24 horas por dia com informação de credibilidade.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Editorias</h4>
+                <ul>
+                    <li><a href="#">Uauá</a></li>
+                    <li><a href="#">Região</a></li>
+                    <li><a href="#">Bahia</a></li>
+                    <li><a href="#">Brasil e Mundo</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Institucional</h4>
+                <ul>
+                    <li><a href="#">Sobre o Portal</a></li>
+                    <li><a href="#">Fale Conosco</a></li>
+                    <li><a href="#">Anuncie Aqui</a></li>
+                    <li><a href="#">Trabalhe Conosco</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Siga-nos</h4>
+                <div class="social-icons">
+                    <a href="#" title="Facebook" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+                    <a href="#" title="Instagram" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+                    <a href="#" title="Twitter" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+                    <a href="#" title="YouTube" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+                    <a href="https://wa.me/5500000000000" title="WhatsApp" aria-label="WhatsApp"><i data-lucide="message-circle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                <p>&copy; 2026 Portal Uauá Digital - Todos os direitos reservados. | CNPJ: 00.000.000/0001-00</p>
+                <p style="font-size: 0.75rem; margin-top: 5px; color: #555;">Desde 2010 trazendo informação com credibilidade.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Repórter Cidadão -->
+    <div class="modal-overlay" id="reporterModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeReporterModal"><i data-lucide="x"></i></button>
+            <div class="modal-header">
+                <h2>Repórter Cidadão</h2>
+                <p>Envie fotos, vídeos ou relatos de acontecimentos de forma fácil e rápida!</p>
+            </div>
+            
+            <form id="reporterForm" class="reporter-form" action="https://formspree.io/f/uauaon2025@gmail.com" method="POST">
+                <!-- Configuração Formspree / E-mail -->
+                <input type="hidden" name="_subject" value="[MODERAÇÃO] Nova Notícia - Repórter Cidadão">
+                <input type="hidden" name="_replyto" id="repEmailHidden">
+                <input type="hidden" name="_cc" value="uauaon2025@gmail.com">
+                
+                <div class="form-group">
+                    <label for="repName">Como podemos te chamar?</label>
+                    <input type="text" id="repName" name="nome" placeholder="Seu nome ou apelido" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="repCpf">CPF (Opcional)</label>
+                        <input type="text" id="repCpf" name="cpf" placeholder="000.000.000-00" maxlength="14">
+                    </div>
+                    <div class="form-group">
+                        <label for="repPhone">WhatsApp de Contato</label>
+                        <input type="text" id="repPhone" name="whatsapp" placeholder="(00) 00000-0000" maxlength="15" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="repDesc">Conta pra gente, o que está acontecendo?</label>
+                    <textarea id="repDesc" name="descricao" rows="4" placeholder="Descreva o fato, localização..." required></textarea>
+                </div>
+                
+                <div class="form-group file-upload-group">
+                    <label class="file-upload-label" for="repMedia">
+                        <i data-lucide="image-plus"></i>
+                        <span>Clique ou Arraste uma Foto/Vídeo</span>
+                    </label>
+                    <input type="file" id="repMedia" name="upload" accept="image/*,video/*" required>
+                    <div class="file-name" id="repMediaName">Nenhum arquivo anexado</div>
+                </div>
+                
+                <p id="validationStatusText" style="display:none; text-align:center; font-size:14px; font-weight:600; color:var(--primary); margin-bottom:15px;"></p>
+                
+                <button type="submit" class="submit-btn" id="submitReporterBtn">Avisar a Redação</button>
+            </form>
+            
+            <div class="modal-success" id="reporterSuccess" style="display: none;">
+                <i data-lucide="check-circle" class="success-icon" style="color: #4CAF50;"></i>
+                <h2>Incrível! Tudo certo.</h2>
+                <p>A redação acaba de receber sua dica! Nossa equipe fará uma rápida conferência e você poderá ver seu material no ar em breve.</p>
+                <button class="submit-btn" id="successCloseBtn">Estar de olho</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=3"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
